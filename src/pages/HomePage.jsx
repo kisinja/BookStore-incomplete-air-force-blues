@@ -3,6 +3,7 @@ import { FaArrowRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import { books, featuredBooks } from "../assets";
 import BookCard from "../components/BookCard";
+import CallToAction from "../components/CallToAction";
 
 const HomePage = () => {
   const featuredCollection = books.filter((book) =>
@@ -48,6 +49,9 @@ const HomePage = () => {
             ))}
         </div>
       </section>
+
+      {/* Call to Action */}
+      <CallToAction/>
     </>
   );
 };
