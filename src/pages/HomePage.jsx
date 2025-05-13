@@ -9,7 +9,6 @@ const HomePage = () => {
   const featuredCollection = books.filter((book) =>
     featuredBooks.includes(book.id)
   );
-  console.log(featuredCollection);
 
   return (
     <>
