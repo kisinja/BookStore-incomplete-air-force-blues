@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaBookOpen } from "react-icons/fa";
+import { FaXmark } from "react-icons/fa6";
 
 const Navbar = () => {
+  // Get the current location from React Router
   const location = useLocation();
+  console.log(location);
+
+  // Navigation links
+  let navLinks = [
+    { label: "Home", path: "/" },
+    { label: "Book Catalog", path: "/book-catalog" },
+    { label: "About Us", path: "/about-us" },
+    { label: "Contact", path: "/contact" },
+  ];
+
+  // State variable for toggling the mobile menu
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
     <nav className="sticky top-0 z-50 bg-white">
@@ -20,18 +34,15 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-8">
-            <NavLink to="/" currentPath={location.pathname}>
-              Home
-            </NavLink>
-            <NavLink to="/book-catalog" currentPath={location.pathname}>
-              Book Catalog
-            </NavLink>
-            <NavLink to="/about-us" currentPath={location.pathname}>
-              About Us
-            </NavLink>
-            <NavLink to="/contact" currentPath={location.pathname}>
-              Contact
-            </NavLink>
+            {navLinks.map((navItem) => (
+              <NavLink
+                to={navItem.path}
+                currentPath={location.pathname}
+                key={navItem.label}
+              >
+                {navItem.label}
+              </NavLink>
+            ))}
 
             {/* Search and User Icons */}
             <div className="flex items-center space-x-4 ml-4">
@@ -69,25 +80,47 @@ const Navbar = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden flex items-center">
-            <button className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-gray-100 transition-colors">
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+          <div className="md:hidden flex items-center cursor-pointer z-[10000] ">
+            {isMenuOpen ? (
+              <FaXmark onClick={() =>setIsMenuOpen(false)} size={23} className="text-indigo-600" />
+            ) : (
+              <button
+                className="inline-flex items-center justify-center p-2 rounded-md text-gray-500 hover:text-indigo-600 hover:bg-gray-100 transition-colors cursor-pointer"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M4 6h16M4 12h16M4 18h16"
-                />
-              </svg>
-            </button>
+                <svg
+                  className="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+            )}
           </div>
         </div>
       </div>
+
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <div className="md:hidden fixed inset-0 bg-white z-50 flex justify-center items-center">
+          <ul className="flex flex-col items-center gap-4">
+            {navLinks.map((navItem) => (
+              <li key={navItem.label} onClick={() => setIsMenuOpen(false)}>
+                <NavLink to={navItem.path} currentPath={location.pathname}>
+                  {navItem.label}
+                </NavLink>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </nav>
   );
 };
@@ -98,7 +131,7 @@ const NavLink = ({ to, currentPath, children }) => {
   return (
     <Link
       to={to}
-      className={`px-1 py-2 text-sm font-medium border-b-2 transition-colors ${
+      className={`px-1 py-2 text-lg font-medium border-b-2 transition-colors ${
         isActive
           ? "border-indigo-600 text-indigo-600"
           : "border-transparent text-gray-500 hover:text-indigo-500 hover:border-indigo-300"

@@ -7,7 +7,7 @@ export const books = [
         category: "Classic",
         description: "A story of wealth, love, and the American Dream in the 1920s through the eyes of the mysterious Jay Gatsby and narrator Nick Carraway.",
         coverImage: "https://m.media-amazon.com/images/I/71FTb9X6wsL._AC_UF1000,1000_QL80_.jpg",
-        rating: 4.5,
+        rating: 2.2,
         stock: 10,
         pages: 180,
         publishedYear: 1925,

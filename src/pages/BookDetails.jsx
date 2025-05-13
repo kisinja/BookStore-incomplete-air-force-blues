@@ -65,7 +65,12 @@ const BookDetails = () => {
     return stars;
   };
 
-  return (
+  if(!bookItem){
+    return <div>Book not found</div>
+  }
+
+  if (bookItem){
+    return (
     <>
       <div className="container mx-auto bg-white p-6 rounded-lg shadow-md mt-3 flex flex-col md:flex-row gap-4 h-max">
         {/* IMAGE CONTAINER */}
@@ -178,6 +183,7 @@ const BookDetails = () => {
       )}
     </>
   );
+  }
 };
 
 export default BookDetails;
